@@ -1,0 +1,71 @@
+
+--Vamos a ver el uso de comandos especiales para el manejo de fechas
+
+select * from Comentarios;
+
+--Usaremos el campos de creacion de la tabla comentarios
+--Usaremos los comando de YEAR, MEONTH, DAY, DATEPART, DATEADD, GETDATE(), CAST
+
+
+Select 
+	Creacion, 
+	YEAR(Creacion) 'year',
+	MONTH(Creacion) 'Month',
+	DAY(Creacion) 'Day',
+	--Ahora veamos las horas, minutos y segundos, para ello usaremos el comando DATEPART
+	DATEPART(HOUR, Creacion) 'Hour',
+	DATEPART(MINUTE, Creacion) 'Minute', 
+	DATEPART(SECOND, Creacion) 'Second',
+	DATEPART(MILLISECOND, Creacion) 'MILISECOND'
+From 
+	Comentarios;
+--Ahora veamos DATEADD, sirve para agregar o quitar valores a las fechas
+--Tambien usaremos una fecha personalizada y la fecha del servidor de Base de datos
+--Fecha personalizada
+
+--PRIMER el TIPO DE COMANDO A USAR para sumarle, en este caso el DIA, luego la cantidad y la 
+--fecha personalizada empezando por año, mes y dia
+
+select DATEADD(DAY, 2, '2023-12-15')
+--ahora la fecha del servidor
+
+select DATEADD(DAY, 2, GETDATE())
+
+--pero solo queremos la fecha, usaremos el comando CAST para comvertir el tipo DATETIME en DATE
+
+--vemos un caso mas restando en lugar de sumar
+
+select CAST(GETDATE() as DATE) 'hoy', DATEADD(DAY, -2, CAST(GETDATE() as DATE)) 'hace 2 dias'
+
+--Ahora como sabemos la diferencia entre fechas, de igual modo
+--se compone de 3 comandos, 
+--Primero a q parte de la fecha se le desea hacer la diferencia, año, mes, dia, hora, minuto, etc
+
+Declare
+	@fechainicio date = '2020-12-15',
+	@fechafin date = '2020-12-19'
+	;
+
+--SELECT DATEDIFF(DAY, @fechainicio, @fechafin)
+
+--veamos, 4 dias de diferencia, invertimos los parametros
+
+SELECT DATEDIFF(DAY, @fechafin, @fechainicio)--se ve el resultado negativo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
